@@ -1,0 +1,11 @@
+.gradle/
+.tools/
+**/build/
+local.properties
+.DS_Store
+dist/
+evidence/
+VALIDATION.md
+*.jks
+*.keystore
+keystore.properties

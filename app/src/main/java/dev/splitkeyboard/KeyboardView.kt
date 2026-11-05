@@ -39,8 +39,9 @@ class KeyboardView(context: Context, private val changed: (ByteArray) -> Unit) :
             var x = paddingLeft + (availableWidth - rowWidth) / 2f + unit * offsets[rowIndex] + rightShift
             keys.forEach { key ->
                 val keyWidth = if (rowIndex == 3 && key.usage == 44) bottomWidth - 3 * rowUnit else rowUnit * key.weight
-                val bottom = top + rowHeight
-                cells += RectF(x + gap, top + gap, x + keyWidth - gap, bottom) to key
+                val keyTop = if (!left && key.usage == 229) top + rowHeight * .5f else top
+                val bottom = top + rowHeight * if (!left && key.usage == 40) 1.5f else 1f
+                cells += RectF(x + gap, keyTop + gap, x + keyWidth - gap, bottom) to key
                 x += keyWidth
             }
             top += rowHeight

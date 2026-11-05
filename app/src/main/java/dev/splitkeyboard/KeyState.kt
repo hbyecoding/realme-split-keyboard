@@ -33,7 +33,7 @@ object Layouts {
             modifiers
         ) else listOf(
             letters("YUIOP") + listOf(Key("⌫", 42, 1.5f)),
-            letters("HJKL") + listOf(Key(";", 51), Key("↵", 40)),
+            letters("HJKL").map { it.copy(weight = 1.15f) } + listOf(Key(";", 51, .7f), Key("↵", 40, .7f)),
             letters("BNM") + listOf(Key(",", 54, .7f), Key(".", 55, .7f), Key("/", 56, .7f), Key("⇧", 229)),
             modifiers
         )

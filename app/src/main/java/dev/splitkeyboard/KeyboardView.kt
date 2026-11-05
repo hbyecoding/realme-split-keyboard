@@ -21,7 +21,7 @@ class KeyboardView(context: Context, private val changed: (ByteArray) -> Unit) :
         cells.clear()
         val rows = Layouts.rows(left)
         val widthScales = listOf(1.5f, 1.5f, 1.5f, .85f)
-        val offsets = if (left) listOf(-.22f, 0f, .22f, 0f) else listOf(-.22f, 0f, -.6f, 0f)
+        val offsets = if (left) listOf(-.22f, 0f, .22f, 0f) else listOf(-.22f, -.45f, -.6f, 0f)
         val maxUnits = rows.take(3).mapIndexed { index, row ->
             row.sumOf { it.weight.toDouble() }.toFloat() * widthScales[index] + 2 * kotlin.math.abs(offsets[index])
         }.max()
@@ -74,8 +74,8 @@ class KeyboardView(context: Context, private val changed: (ByteArray) -> Unit) :
                     state.down(event.getPointerId(index), it.second.usage)
                     if (vibrationEnabled && vibrator?.hasVibrator() == true) {
                         val effect = if (it.second.usage == 13)
-                            VibrationEffect.createWaveform(longArrayOf(0, 18, 35, 18), intArrayOf(0, 150, 0, 150), -1)
-                        else VibrationEffect.createOneShot(12, 80)
+                            VibrationEffect.createWaveform(longArrayOf(0, 18, 35, 18), intArrayOf(0, 220, 0, 220), -1)
+                        else VibrationEffect.createOneShot(24, 220)
                         vibrator.vibrate(effect)
                     }
                 }

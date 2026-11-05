@@ -67,15 +67,25 @@ class MainActivity : Activity() {
             toolbar.addView(Button(this).apply { text = label; textSize = 12f; setOnClickListener { action() } }, LinearLayout.LayoutParams(0, (48 * resources.displayMetrics.density).toInt(), 1f))
         }
         val prefs = getSharedPreferences("layout", MODE_PRIVATE)
+        keyboard.vibrationEnabled = prefs.getBoolean("vibration", true)
         val gutter = (64 * resources.displayMetrics.density).toInt()
         fun side(left: Boolean) {
-            keyboard.setPadding(if (left) gutter else 0, 0, if (left) 0 else gutter, 0)
+            keyboard.setPadding(gutter, 0, 0, 0)
             keyboard.side(left)
-            status.layoutParams = FrameLayout.LayoutParams(gutter, (64 * resources.displayMetrics.density).toInt(), Gravity.BOTTOM or if (left) Gravity.LEFT else Gravity.RIGHT)
+            status.layoutParams = FrameLayout.LayoutParams(gutter, (64 * resources.displayMetrics.density).toInt(), Gravity.BOTTOM or Gravity.LEFT)
         }
         side(prefs.getBoolean("left", true))
         button("左手") { side(true); prefs.edit().putBoolean("left", true).apply(); settings.visibility = android.view.View.GONE }
         button("右手") { side(false); prefs.edit().putBoolean("left", false).apply(); settings.visibility = android.view.View.GONE }
+        toolbar.addView(Button(this).apply {
+            text = if (keyboard.vibrationEnabled) "震动开" else "震动关"
+            textSize = 12f
+            setOnClickListener {
+                keyboard.vibrationEnabled = !keyboard.vibrationEnabled
+                prefs.edit().putBoolean("vibration", keyboard.vibrationEnabled).apply()
+                text = if (keyboard.vibrationEnabled) "震动开" else "震动关"
+            }
+        }, LinearLayout.LayoutParams(0, (48 * resources.displayMetrics.density).toInt(), 1f))
         button("启用蓝牙") { enable() }
         button("配对") {
             if (allowed()) {

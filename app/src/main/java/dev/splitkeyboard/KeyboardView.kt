@@ -57,7 +57,7 @@ class KeyboardView(context: Context, private val changed: (ByteArray) -> Unit) :
             paint.textAlign = Paint.Align.CENTER
             paint.textSize = minOf(rect.height() * .34f, rect.width() / maxOf(key.label.length, 2) * 1.3f)
             canvas.drawText(key.label, rect.centerX(), rect.centerY() - (paint.ascent() + paint.descent()) / 2, paint)
-            if (key.usage == 13) {
+            if (key.usage == 9 || key.usage == 13) {
                 val markerWidth = rect.width() * .18f
                 val markerTop = rect.bottom - rect.height() * .14f
                 canvas.drawRoundRect(rect.centerX() - markerWidth / 2, markerTop,
@@ -73,7 +73,7 @@ class KeyboardView(context: Context, private val changed: (ByteArray) -> Unit) :
                 cells.firstOrNull { it.first.contains(event.getX(index), event.getY(index)) }?.let {
                     state.down(event.getPointerId(index), it.second.usage)
                     if (vibrationEnabled && vibrator?.hasVibrator() == true) {
-                        val effect = if (it.second.usage == 13)
+                        val effect = if (it.second.usage == 9 || it.second.usage == 13)
                             VibrationEffect.createWaveform(longArrayOf(0, 18, 35, 18), intArrayOf(0, 220, 0, 220), -1)
                         else VibrationEffect.createOneShot(24, 220)
                         vibrator.vibrate(effect)
